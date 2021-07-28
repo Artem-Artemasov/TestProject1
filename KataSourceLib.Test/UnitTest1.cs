@@ -25,21 +25,27 @@ namespace TestProject1
         }
 
         [Fact]
-        public void MultipleNumbersPassPass()
+        public void MultipleNumbersPassPassing()
         {
             Assert.Equal(20, CalculatorLogics.Add("2,2,5,5,6"));
         }
 
         [Fact]
-        public void NewLineAsSplitterPass()
+        public void NewLineAsSplitterPassing()
         {
             Assert.Equal(10, CalculatorLogics.Add("2\n8"));
         }
 
         [Fact]
-        public void NewLineAndCommaAsSplitterPass()
+        public void NewLineAndCommaAsSplitterPassing()
         {
             Assert.Equal(9, CalculatorLogics.Add("2\n2,5"));
+        }
+
+        [Fact]
+        public void CustomDelimiterPassing()
+        {
+            Assert.Equal(11, CalculatorLogics.Add("//;\n2;4;5"));
         }
     }
 }
