@@ -6,7 +6,7 @@ namespace KataSourceLib
 {
     public class CalculatorLogics
     {
-        private const string RegexPattern = "^(\\d*)((((,||(\\n))(\\d*))*)||())$";  // One or more numbers separated by comma or/and new line (excluding everything else)
+        //private const string RegexPattern = "^(\\d*)((((,||(\\n))(\\d*))*)||())$";  // One or more numbers separated by comma or/and new line (excluding everything else)
         public static int Add(string numbers)
         {
             int result = 0;
@@ -14,13 +14,10 @@ namespace KataSourceLib
             {
                 return 0;
             }
-            if (Regex.IsMatch(numbers, RegexPattern))
-            {
-                result = numbers.Split(new char[] { ',', '\n' })
-                                .Select(str =>
-                                int.Parse(str))
-                                .Aggregate((x, y) => x + y);
-            }
+            result = numbers.Split(new char[] { ',', '\n' })
+                            .Select(str =>
+                            int.Parse(str))
+                            .Aggregate((x, y) => x + y);
             return result;
         }
     }
