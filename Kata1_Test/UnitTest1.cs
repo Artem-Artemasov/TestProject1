@@ -108,5 +108,23 @@ namespace TestProject1
             //assert
             Assert.Equal(12, result);
         }
+        
+        [Fact]
+        public void Add_WhenDelimiterIsString_Passing()
+        {
+            //act
+            int result = StringCalculator.Add("//[***]\n1***2***3");
+            //assert
+            Assert.Equal(6, result);
+        }
+
+        [Fact]
+        public void Add_ForMultipleDelimiterStrings_Passing()
+        {
+            //act
+            int result = StringCalculator.Add("//[*a*][%]\n1*a*2%3*a*4%20");
+            //assert
+            Assert.Equal(30, result);
+        }
     }
 }

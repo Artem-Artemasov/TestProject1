@@ -50,11 +50,18 @@ namespace Kata1
 
         private static string[] GetDelimiters(string numbers)
         {
-            string[] delimiters = new string[1];
+            string[] delimiters = Array.Empty<string>();
+            string prefix;
+
             if (numbers.StartsWith("//"))
             {
                 int valuesStartIndex = numbers.IndexOf('\n');
-                delimiters[0] = numbers[2..valuesStartIndex]; // Takes symbols after "//" as delimiter
+                prefix = numbers[2..valuesStartIndex];
+
+                if (prefix.StartsWith('[') && prefix.EndsWith(']'))
+                    delimiters = prefix.Split(new char[] { ']', '[' }, StringSplitOptions.RemoveEmptyEntries);
+                else
+                    delimiters = delimiters.Append(numbers[2..valuesStartIndex]).ToArray(); // Takes symbols after "//" as delimiter
             }
             else
             {
