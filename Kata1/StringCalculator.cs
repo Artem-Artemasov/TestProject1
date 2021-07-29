@@ -75,12 +75,12 @@ namespace Kata1
         private string GetNegativesString(List<int> resultArr)
         {
 
-            return " " + string.Join(" ", resultArr.Where(x => x < 0));
+            //return " " + string.Join(" ", resultArr.Where(x => x < 0));
             /*
             return resultArr.Where(x => x < 0)
                             .Select(x => " " + x.ToString())
                             .Aggregate((x, y) => x + y);
-            /*
+            */
             string negativesMessage = "";
             foreach (int number in resultArr)
             {
@@ -89,7 +89,7 @@ namespace Kata1
                     negativesMessage += " " + number.ToString();
                 }
             }
-            return negativesMessage;*/
+            return negativesMessage;
 
         }
     }
