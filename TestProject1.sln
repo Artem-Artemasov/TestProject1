@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KataSourceLib", "KataSourceLib\KataSourceLib.csproj", "{0C110764-7D5D-46D0-84B7-250B5E069A31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kata1", "KataSourceLib\Kata1.csproj", "{0C110764-7D5D-46D0-84B7-250B5E069A31}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KataSourceLibTest", "KataSourceLib.Test\KataSourceLibTest.csproj", "{D49E962D-C47C-48A8-B4C2-EF167BF0D9A9}"
 	ProjectSection(ProjectDependencies) = postProject

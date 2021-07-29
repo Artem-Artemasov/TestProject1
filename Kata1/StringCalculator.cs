@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace KataSourceLib
 {
-    public class CalculatorLogics
+    public class StringCalculator
     {
         //private const string RegexPattern = "^(\\d*)((((,||(\\n))(\\d*))*)||())$";  // One or more numbers separated by comma or/and new line (excluding everything else)
         public static int Add(string numbers)

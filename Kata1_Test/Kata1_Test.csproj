@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KataSourceLib\KataSourceLib.csproj" />
+    <ProjectReference Include="..\Kata1\Kata1.csproj" />
   </ItemGroup>
 
 </Project>
