@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace KataSourceLib
+namespace Kata1
 {
     public class StringCalculator
     {
@@ -16,22 +16,8 @@ namespace KataSourceLib
                 return 0;
             }
 
-            //generatig int array
-            if (numbers.StartsWith("//"))
-            {
-                int valuesArrStartIndex = numbers.IndexOf('\n') + 1;
-                char customDelimiter = numbers[2];
-                resultArr = numbers.Substring(valuesArrStartIndex)
-                                    .Split(customDelimiter)
-                                    .Select(str =>
-                                    int.Parse(str)).ToArray();
-            }
-            else
-            {
-                resultArr = numbers.Split(new char[] { ',', '\n' })
-                                    .Select(str =>
-                                    int.Parse(str)).ToArray();
-            }
+            //generating int[]
+            resultArr = MakeArrayFromString(numbers);
 
             //counting negatives (if multiple) and generating error message
             int negativesCount = 0;
@@ -53,6 +39,31 @@ namespace KataSourceLib
             }
             else
                 throw new Exception($"negatives not allowed ({negativesMessage} )");
+        }
+
+        private static int[] MakeArrayFromString(string numbers)
+        {
+            int[] resultArr;
+
+            if (numbers.StartsWith("//"))
+            {
+                int valuesArrStartIndex = numbers.IndexOf('\n') + 1;
+
+                char customDelimiter = numbers[2]; // Takes symbol after "//" as delimiter
+
+                resultArr = numbers.Substring(valuesArrStartIndex)
+                                    .Split(customDelimiter)
+                                    .Select(str =>
+                                    int.Parse(str)).ToArray();
+            }
+            else
+            {
+                resultArr = numbers.Split(new char[] { ',', '\n' })
+                                    .Select(str =>
+                                    int.Parse(str)).ToArray();
+            }
+
+            return resultArr;
         }
     }
 }

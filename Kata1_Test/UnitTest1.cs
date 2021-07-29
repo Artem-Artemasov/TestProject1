@@ -1,6 +1,6 @@
 using System;
 using Xunit;
-using KataSourceLib;
+using Kata1;
 
 namespace TestProject1
 {
@@ -9,71 +9,93 @@ namespace TestProject1
         [Fact]
         public void Add_WhenEmptyString_ShouldReturnsZero()
         {
-            //arrange
             //act
+            int result = StringCalculator.Add("");
             //assert
-            Assert.Equal(0, StringCalculator.Add(""));
+            Assert.Equal(0, result);
         }
 
         [Fact]
-        public void OneNumberStingPassing()
+        public void Add_WhenOneNumberSting_Passing()
         {
-            Assert.Equal(7, StringCalculator.Add("7"));
+            //act
+            int result = StringCalculator.Add("7");
+            //assert
+            Assert.Equal(7, result);
         }
 
         [Fact]
-        public void TwoNumbersWithCommaPassing()
+        public void Add_WhenTwoNumbersWithComma_Passing()
         {
-            Assert.Equal(10, StringCalculator.Add("2,8"));
+            //act
+            int result = StringCalculator.Add("2,8");
+            //assert
+            Assert.Equal(10, result);
         }
 
         [Fact]
-        public void MultipleNumbersPassPassing()
+        public void Add_WhenMultipleNumbersInString_Passing()
         {
-            Assert.Equal(20, StringCalculator.Add("2,2,5,5,6"));
+            //act
+            int result = StringCalculator.Add("2,2,5,5,6");
+            //assert
+            Assert.Equal(20, result);
         }
 
         [Fact]
-        public void NewLineAsSplitterPassing()
+        public void Add_WhenNewLineAsSplitter_Passing()
         {
-            Assert.Equal(10, StringCalculator.Add("2\n8"));
+            //act
+            int result = StringCalculator.Add("2\n8");
+            //assert
+            Assert.Equal(10, result);
         }
 
         [Fact]
-        public void NewLineAndCommaAsSplitterPassing()
+        public void Add_WhenNewLineAndCommaMixedAsSplitters_Passing()
         {
-            Assert.Equal(9, StringCalculator.Add("2\n2,5"));
+            //act
+            int result = StringCalculator.Add("2\n2,5");
+            //assert
+            Assert.Equal(9, result);
         }
 
         [Fact]
-        public void CustomDelimiterPassing()
+        public void Add_WithCustomDelimiterPrefix_Passing()
         {
-            Assert.Equal(11, StringCalculator.Add("//;\n2;4;5"));
+            //act
+            int result = StringCalculator.Add("//;\n2;4;5");
+            //assert
+            Assert.Equal(11, result);
         }
 
         [Fact]
-        public void OneNegativeException()
+        public void Add_WhenOneNegative_ExceptionMessageCheck()
         {
             try
             {
+                //act
                 StringCalculator.Add("3,-3,4,6");
             }
             catch (Exception ex)
             {
+                //assert
                 Assert.Equal("negatives not allowed ( -3 )", ex.Message);
             }
 
         }
 
         [Fact]
-        public void MultipleNegativesException()
+        public void Add_WhenMultipleNegatives_ExceptionMessageCheck()
         {
             try
             {
+                //act
                 StringCalculator.Add("//;\n3;-3;4;-6;5;7;-8");
             }
             catch (Exception ex)
             {
+                //assert
                 Assert.Equal("negatives not allowed ( -3 -6 -8 )", ex.Message);
             }
         }
