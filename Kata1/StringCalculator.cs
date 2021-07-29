@@ -32,11 +32,12 @@ namespace Kata1
             if (numbers.StartsWith("//"))
             {
                 int valuesStartIndex = numbers.IndexOf('\n');
-                string prefix = numbers[2..valuesStartIndex];
+                string delimitersContainer = numbers[2..valuesStartIndex];
 
-                if (prefix.StartsWith('[') && prefix.EndsWith(']'))
+                if (delimitersContainer.StartsWith('[') && delimitersContainer.EndsWith(']'))
                 {
-                    delimiters = prefix[1..^1].Split("][", StringSplitOptions.RemoveEmptyEntries).ToList();
+                    Range noBrackets = 1..^1;
+                    delimiters = delimitersContainer[noBrackets].Split("][", StringSplitOptions.RemoveEmptyEntries).ToList();
                 }
                 else
                 {

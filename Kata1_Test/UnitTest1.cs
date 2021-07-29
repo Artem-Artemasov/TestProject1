@@ -80,20 +80,14 @@ namespace TestProject1
         [Fact]
         public void Add_WhenNegativesInString_ExceptionMessageCheck()
         {
-            try
-            {
-                //act
-                calculator.Add("3,-3,4,-6,5,7,-8");
-            }
-            catch (Exception ex)
-            {
-                //assert
-                Assert.Equal("negatives not allowed ( -3 -6 -8 )", ex.Message);
-            }
+
+            Exception ex = Assert.Throws<Exception>(() => calculator.Add("3,-3,4,-6,5,7,-8"));
+
+            Assert.Equal("negatives not allowed ( -3 -6 -8 )", ex.Message);
         }
 
         [Fact]
-        public void Add_WhenNumberMoreThan1000_IgnoresLargeNumbers()
+        public void Add_WhenNumbersMoreThan1000_IgnoresLargeNumbers()
         {
             //act
             int result = calculator.Add("3,4,5,1500");
@@ -101,9 +95,9 @@ namespace TestProject1
             //assert
             Assert.Equal(12, result);
         }
-        
+
         [Fact]
-        public void Add_WhenDelimiterIsString_ReturnsSum()
+        public void Add_StringDelimiterSupport()
         {
             //act
             int result = calculator.Add("//[***]\n1***2***3");
@@ -113,7 +107,7 @@ namespace TestProject1
         }
 
         [Fact]
-        public void Add_ForMultipleDelimiterStrings_Passing()
+        public void Add_MultipleDelimiterStringsSupport()
         {
             //act
             int result = calculator.Add("//[*a*][%][[]\n1*a*2%3*a*4[20");
