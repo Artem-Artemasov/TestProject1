@@ -91,13 +91,22 @@ namespace TestProject1
             try
             {
                 //act
-                StringCalculator.Add("//;\n3;-3;4;-6;5;7;-8");
+                StringCalculator.Add("3,-3,4,-6,5,7,-8");
             }
             catch (Exception ex)
             {
                 //assert
                 Assert.Equal("negatives not allowed ( -3 -6 -8 )", ex.Message);
             }
+        }
+
+        [Fact]
+        public void Add_WhenNumberMoreThan1000_IgnoringThatNumber()
+        {
+            //act
+            int result = StringCalculator.Add("3,4,5");
+            //assert
+            Assert.Equal(12, result);
         }
     }
 }

@@ -10,18 +10,25 @@ namespace Kata1
         public static int Add(string numbers)
         {
             int[] resultArr;
-            int result = 0;
-            if (string.IsNullOrEmpty(numbers))
-            {
-                return 0;
-            }
+            string[] delimiters;
 
-            //generating int[]
-            resultArr = MakeArrayFromString(numbers);
-
-            //counting negatives (if multiple) and generating error message
             int negativesCount = 0;
             string negativesMessage = "";
+
+            int result = 0;
+
+            if (string.IsNullOrEmpty(numbers))
+                return 0;
+
+            delimiters = GetDelimiters(numbers);
+            numbers = GetNumbers(numbers);
+            resultArr = numbers.Split(delimiters, StringSplitOptions.None)
+                                .Select(str =>
+                                int.Parse(str)).ToArray();
+
+            ExcludeLargeNumbers(ref resultArr);
+
+            //counting negatives (if multiple) and generating error message
             foreach (int number in resultArr)
             {
                 if (number < 0)
@@ -31,7 +38,7 @@ namespace Kata1
                 }
             }
 
-            
+
             if (negativesCount == 0)
             {
                 result = resultArr.Aggregate((x, y) => x + y);
@@ -41,29 +48,45 @@ namespace Kata1
                 throw new Exception($"negatives not allowed ({negativesMessage} )");
         }
 
-        private static int[] MakeArrayFromString(string numbers)
+        private static string[] GetDelimiters(string numbers)
         {
-            int[] resultArr;
-
+            string[] delimiters = new string[1];
             if (numbers.StartsWith("//"))
             {
-                int valuesArrStartIndex = numbers.IndexOf('\n') + 1;
-
-                char customDelimiter = numbers[2]; // Takes symbol after "//" as delimiter
-
-                resultArr = numbers.Substring(valuesArrStartIndex)
-                                    .Split(customDelimiter)
-                                    .Select(str =>
-                                    int.Parse(str)).ToArray();
+                int valuesStartIndex = numbers.IndexOf('\n');
+                delimiters[0] = numbers[2..valuesStartIndex]; // Takes symbols after "//" as delimiter
             }
             else
             {
-                resultArr = numbers.Split(new char[] { ',', '\n' })
-                                    .Select(str =>
-                                    int.Parse(str)).ToArray();
+                delimiters = new string[] { ",", "\n" };
             }
 
-            return resultArr;
+            return delimiters;
+        }
+        private static string GetNumbers(string numbers)
+        {
+            string result;
+            if (numbers.StartsWith("//"))
+            {
+                int valuesStartIndex = numbers.IndexOf('\n') + 1;
+                result = numbers.Substring(valuesStartIndex);
+            }
+            else
+            {
+                result = numbers;
+            }
+
+            return result;
+        }
+        private static void ExcludeLargeNumbers(ref int[] resultArr)
+        {
+            int[] tempArr = Array.Empty<int>();
+            for (var i = 0; i < resultArr.Length; i++)
+            {
+                if (resultArr[i] < 1000)
+                    tempArr = tempArr.Append(resultArr[i]).ToArray();
+            }
+            resultArr = tempArr;
         }
     }
 }
