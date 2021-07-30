@@ -6,42 +6,49 @@ namespace Kata1
 {
     public class StringCalculator
     {
-        public int Add(string numbers)
+        public int Add(string input)
         {
-            if (string.IsNullOrEmpty(numbers))
+            if (string.IsNullOrEmpty(input))
             {
                 return 0;
             }
 
-            List<int> resultList = GetNumbers(numbers, GetDelimiters(numbers));
-            resultList = ExcludeLargeNumbers(resultList);
+            List<string> delimiters = GetDelimiters(input, out string noPrefixInput);
+            IEnumerable<int> numbers = GetNumbers(noPrefixInput, delimiters);
+            IEnumerable<int> negatives = numbers.Where(x => x < 0);
 
-            string negativesMessage = GetNegativesString(resultList);
-
-            if (!string.IsNullOrEmpty(negativesMessage))
+            if (negatives.Count() > 0)
             {
-                throw new Exception($"negatives not allowed ({negativesMessage} )");
+                string negativesMessage = string.Join(" ", negatives);
+                throw new Exception($"negatives not allowed ( {negativesMessage} )");
             }
 
-            return resultList.Sum();
+            return numbers.Where(x => x < 1000).Sum();
         }
-        private List<string> GetDelimiters(string numbers)
+
+        private List<string> GetDelimiters(string input, out string noPrefixInput)
         {
             List<string> delimiters = new();
+            noPrefixInput = input;
 
-            if (numbers.StartsWith("//"))
+            if (input.StartsWith("//"))
             {
-                int valuesStartIndex = numbers.IndexOf('\n');
-                string delimitersContainer = numbers[2..valuesStartIndex];
+                int prefixEndIndex = input.IndexOf(@"\n");              // Finding end of prefix
 
-                if (delimitersContainer.StartsWith('[') && delimitersContainer.EndsWith(']'))
+                Range delimitersRange = 2..prefixEndIndex;              // Excluding "//" in the beggining and taking to the first entry of "\n"
+                string delimitersSubstring = input[delimitersRange];    // Getting delimiter(s) container substring
+
+                Range numbersRange = (prefixEndIndex + 2)..;            // Index where numers start to appear
+                noPrefixInput = input[numbersRange];                    // Cutting off prefix from "input" string for further processing
+
+                if (delimitersSubstring.StartsWith('[') && delimitersSubstring.EndsWith(']'))
                 {
-                    Range noBrackets = 1..^1;
-                    delimiters = delimitersContainer[noBrackets].Split("][", StringSplitOptions.RemoveEmptyEntries).ToList();
+                    Range noBrackets = 1..^1;                           // Removng outer brackets
+                    delimiters = delimitersSubstring[noBrackets].Split("][", StringSplitOptions.RemoveEmptyEntries).ToList();
                 }
                 else
                 {
-                    delimiters.Add(numbers[2..valuesStartIndex]);
+                    delimiters.Add(input[2..prefixEndIndex]);
                 }
             }
             else
@@ -51,46 +58,11 @@ namespace Kata1
 
             return delimiters;
         }
-        private List<int> GetNumbers(string numbers, List<string> delimiters)
+
+        private IEnumerable<int> GetNumbers(string input, List<string> delimiters)
         {
-
-            string result = numbers;
-
-            if (numbers.StartsWith("//"))
-            {
-                int valuesStartIndex = numbers.IndexOf('\n') + 1;
-                result = numbers.Substring(valuesStartIndex);
-            }
-
-            List<int> resultArr = result.Split(delimiters.ToArray(), StringSplitOptions.None)
-                                .Select(str =>
-                                int.Parse(str)).ToList();
-
-            return resultArr;
-        }
-        private List<int> ExcludeLargeNumbers(List<int> resultArr)
-        {
-            return resultArr.Where(x => x < 1000).ToList();
-        }
-        private string GetNegativesString(List<int> resultArr)
-        {
-
-            //return " " + string.Join(" ", resultArr.Where(x => x < 0));
-            /*
-            return resultArr.Where(x => x < 0)
-                            .Select(x => " " + x.ToString())
-                            .Aggregate((x, y) => x + y);
-            */
-            string negativesMessage = "";
-            foreach (int number in resultArr)
-            {
-                if (number < 0)
-                {
-                    negativesMessage += " " + number.ToString();
-                }
-            }
-            return negativesMessage;
-
+            return input.Split(delimiters.ToArray(), StringSplitOptions.None)
+                        .Select(str => int.Parse(str));
         }
     }
 }

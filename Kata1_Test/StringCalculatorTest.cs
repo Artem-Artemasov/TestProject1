@@ -4,9 +4,10 @@ using Kata1;
 
 namespace TestProject1
 {
-    public class UnitTest1
+    public class StringCalculatorTest
     {
         private StringCalculator calculator = new StringCalculator();
+
         [Fact]
         public void Add_WhenEmptyString_ShouldReturnsZero()
         {
@@ -71,7 +72,7 @@ namespace TestProject1
         public void Add_WithCustomDelimiterPrefix_ReturnsSum()
         {
             //act
-            int result = calculator.Add("//;\n2;4;5");
+            int result = calculator.Add(@"//;\n2;4;5");
 
             //assert
             Assert.Equal(11, result);
@@ -100,7 +101,7 @@ namespace TestProject1
         public void Add_StringDelimiterSupport()
         {
             //act
-            int result = calculator.Add("//[***]\n1***2***3");
+            int result = calculator.Add(@"//[***]\n1***2***3");
 
             //assert
             Assert.Equal(6, result);
@@ -110,7 +111,7 @@ namespace TestProject1
         public void Add_MultipleDelimiterStringsSupport()
         {
             //act
-            int result = calculator.Add("//[*a*][%][[]\n1*a*2%3*a*4[20");
+            int result = calculator.Add(@"//[*a*][%][[]\n1*a*2%3*a*4[20");
 
             //assert
             Assert.Equal(30, result);
